@@ -1,0 +1,77 @@
+.faq {
+  &__acc {
+    &-outer {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    &.active {
+      .faq__acc {
+        &-content {
+          opacity: 1;
+        }
+      }
+    }
+
+    &-btn {
+      border-radius: var(--desktop-radius);
+      border-top: 2px solid var(--accent);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      width: 100%;
+      padding: 10px 40px;
+
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 0.12px;
+
+      @media (any-hover: hover) {
+        &:hover {
+          border-color: var(--accent-hover);
+        }
+      }
+    }
+
+    &-content {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 300;
+      letter-spacing: 0.1px;
+      padding: 0 70px;
+
+      display: flex;
+      flex-direction: column;
+
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      will-change: max-height;
+      box-sizing: content-box;
+    }
+  }
+}
+
+@media(max-width: 1170px) {
+  .faq {
+    &__title {
+      font-size: 36px !important;
+    }
+
+    &__acc {
+      &-btn {
+        padding: 10px;
+        font-size: 16px;
+      }
+
+      &-content {
+        font-size: 12px;
+        padding: 0;
+      }
+    }
+  }
+}

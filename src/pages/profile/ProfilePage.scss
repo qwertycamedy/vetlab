@@ -1,0 +1,88 @@
+.profile {
+
+  &__side-content {
+    display: flex;
+    gap: 100px;
+  }
+
+  &__side {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-width: 200px;
+    &-item {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    &-title {
+      font-size: 16px;color: #B2B1B1;
+    }
+
+    &-user {
+      font-size: 24px;
+    }
+
+    &-pet {
+      font-size: 24px;
+      color: var(--dark);
+
+      text-decoration: underline transparent;
+
+      transition: text-decoration .2s linear;
+
+      @media(any-hover: hover) {
+        &:hover {
+          text-decoration: underline currentColor;
+        }
+      }
+      &.active {
+        text-decoration: underline currentColor;
+        pointer-events: none;
+      }
+    }
+  }
+
+  &__content {
+    width: 100%;
+    background: var(--light);
+    box-shadow: var(--block-shadow);
+    border-radius: var(--desktop-radius);
+    padding: 50px;
+    min-height: 410px;
+  }
+
+  &__pet {
+    &-name {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    &-info {
+      display: flex;
+      gap: 205px;
+    }
+
+    &-col,
+    &-item,
+    &-reception,
+    &-val {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    &-key {
+      font-size: 16px;color: #B2B1B1;
+    }
+
+    &-val {
+      font-size: 20px;
+    }
+
+    &-btn {
+      margin-bottom: 20px;
+      padding: 20px 40px;
+    }
+  }
+}

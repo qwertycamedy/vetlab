@@ -1,0 +1,39 @@
+.login {
+    &__inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    &__block {
+      box-shadow: var(--block-shadow);
+      background: var(--light);
+      border-radius: var(--desktop-radius);
+  
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      padding: 50px;
+    }
+  
+    &__form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 100%;
+      max-width: 310px;
+      gap: 10px;
+    }
+  
+    &__title {
+      text-align: center;
+      margin-bottom: 0;
+    }
+  
+    &__btn {
+      width: 100%;
+    }
+  }

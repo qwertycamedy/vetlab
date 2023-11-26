@@ -1,0 +1,108 @@
+.services {
+  &__card {
+    &-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    &-row {
+      display: flex;
+      gap: 10px;
+    }
+    border-radius: var(--desktop-radius);
+
+    display: flex;
+    flex-direction: column;
+    gap: 68px;
+    overflow: hidden;
+    position: relative;
+    height: 252px;
+    padding: 50px;
+
+    &-title {
+      font-size: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    &-img {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translate(0,-50%);
+    }
+
+    &-btn {
+      position: relative;
+      z-index: 1;
+      font-family: var(--ptserif) !important;
+      font-size: 24px;
+      border-radius: var(--mobile-radius) !important;
+      width: max-content;
+      padding: 12px 60px;
+      border-color: var(--dark) !important;
+      color: var(--dark) !important;
+
+      transition: background .2s linear, border-color .2s linear, color .2s linear;
+      @media(any-hover: hover) {
+        &:hover {
+          background: var(--accent) !important;
+          border-color: var(--accent) !important;
+          color: var(--light) !important;
+        }
+      }
+    }
+
+    &.one {
+      width: 400px;
+    }
+
+    &.two {
+      width: 466px;
+    }
+
+    &.three {
+      width: 358px;
+    }
+
+    &.four {
+      width: 480px;
+    }
+
+    &.five {
+      width: 342px;
+    }
+
+    &.six {
+      width: 472px;
+    }
+
+    &.seven {
+      width: 475px;
+    }
+  }
+}
+
+@media(max-width: 1170px) {
+  .services {
+    &__card {
+      &-row {
+        flex-direction: column;
+        width: 100%;
+      }
+      width: 100% !important;
+      padding: 20px;
+      justify-content: space-between;
+      height: 180px;
+
+      &-btn {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.40);
+
+        backdrop-filter: blur(2px);
+      }
+    }
+  }
+}

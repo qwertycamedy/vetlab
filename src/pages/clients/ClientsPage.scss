@@ -1,0 +1,44 @@
+.clients {
+    &__card {
+      &-outer {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+      }
+  
+  
+      height: 260px;
+      border-radius: var(--desktop-radius);
+      transition: box-shadow .2s linear;
+  
+      @media (any-hover: hover) {
+        &:hover {
+          box-shadow: var(--block-shadow);
+        }
+      }
+  
+      & > img {
+        width: 100%;
+        height: inherit;
+        border-radius: inherit;
+        object-fit: cover;
+      }
+    }
+  }
+  
+  @media(max-width: 1170px) {
+    .clients {
+      &__title {
+        font-size: 36px;
+      }
+  
+      &__card {
+        height: 100px;
+        &-outer {
+          gap: 4px;
+          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+      }
+    }
+  }
+  

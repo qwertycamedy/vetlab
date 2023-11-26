@@ -1,0 +1,52 @@
+.price {
+    &__table {
+      &-head,
+      &-item {
+        padding: 16px;
+        border-bottom: 1px solid var(--dark);
+  
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+  
+      &-head {
+        font-size: 18px;
+        font-weight: 600;
+      }
+  
+      &-item {
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 400;
+        background: transparent;
+        color: var(--dark);
+  
+        transition: background .2s linear;
+  
+        @media(any-hover: hover) {
+          &:hover {
+            background: var(--blue-light);
+          }
+        }
+      }
+    }
+  }
+  
+  @media(max-width: 1170px) {
+    .price {
+      &__table {
+        &-head,
+        &-item {
+          padding: 10px 0;
+          font-size: 12px;
+        }
+  
+        &-name {
+          max-width: 264px;
+        }
+      }
+    }
+  }
+  

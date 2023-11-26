@@ -1,0 +1,33 @@
+.reviews {
+  &__slider {
+    overflow: unset;
+    &-content {
+      border: 1px solid #B2B1B1;
+      background: #D9D9D9;
+      height: 502px;
+    }
+
+    &-img {
+      width: 100%;
+      height: inherit;
+    }
+  }
+}
+
+@media(max-width: 1170px) {
+  .reviews {
+    &__slider {
+      width: calc(100% + 30px);
+      left: -15px;
+      position: relative;
+      &-slide {
+        width: 235px;
+        height: 422px;
+      }
+
+      &-content {
+        height: calc(100% - 1px);
+      }
+    }
+  }
+}
