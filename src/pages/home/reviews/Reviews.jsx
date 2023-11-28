@@ -4,11 +4,18 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css/bundle';
 
-import img from '@assets/img/review.jpg';
-
-const slides = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { useDispatch, useSelector } from 'react-redux';
+import { getReviews, reviewsSel } from '@store/slices/reviews/reviewsSlice';
+import { useEffect } from 'react';
 
 const Reviews = () => {
+  const dispatch = useDispatch();
+  const {reviews} = useSelector(reviewsSel);
+
+  useEffect(() => {
+    dispatch(getReviews());
+  }, [dispatch])
+  
   return (
     <MySection classNames={'reviews'} innerCl={'reviews__inner'}>
       <h3 className="reviews__title title title-section">Отзывы</h3>
@@ -31,13 +38,13 @@ const Reviews = () => {
             }
           }}
         >
-          {slides.map((_, i) => (
+          {reviews?.map((obj, i) => (
             <SwiperSlide className="reviews__slider-slide" key={i}>
               <div className="reviews__slider-content slider-slide">
                 <img
                   className="reviews__slider-img"
                   loading="lazy"
-                  src={img}
+                  src={obj.image}
                   width="279"
                   height="520"
                   alt="reviews"

@@ -91,7 +91,7 @@
   transition: border-color 0.2s linear;
 
   &::placeholder {
-    color: var(--gray);
+    color: #8d8d8d;
   }
 
   @media (any-hover: hover) {

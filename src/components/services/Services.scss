@@ -1,16 +1,12 @@
 .services {
   &__card {
-    &-col {
+    &-outer {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
       gap: 10px;
-      align-items: flex-end;
+      justify-content: flex-end;
     }
 
-    &-row {
-      display: flex;
-      gap: 10px;
-    }
     border-radius: var(--desktop-radius);
 
     display: flex;
@@ -18,8 +14,11 @@
     gap: 68px;
     overflow: hidden;
     position: relative;
+    min-width: 342px;
     height: 252px;
     padding: 50px;
+
+    background: var(--green-dark);
 
     &-title {
       font-size: 24px;
@@ -54,44 +53,13 @@
         }
       }
     }
-
-    &.one {
-      width: 400px;
-    }
-
-    &.two {
-      width: 466px;
-    }
-
-    &.three {
-      width: 358px;
-    }
-
-    &.four {
-      width: 480px;
-    }
-
-    &.five {
-      width: 342px;
-    }
-
-    &.six {
-      width: 472px;
-    }
-
-    &.seven {
-      width: 475px;
-    }
   }
 }
 
 @media(max-width: 1170px) {
   .services {
     &__card {
-      &-row {
-        flex-direction: column;
-        width: 100%;
-      }
+      min-width: auto;
       width: 100% !important;
       padding: 20px;
       justify-content: space-between;

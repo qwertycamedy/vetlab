@@ -5,21 +5,23 @@ import { EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css/bundle';
-
-import img from '@assets/img/team-big.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
-
-const slides = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { getTeam, teamSel } from '@store/slices/team/teamSlice';
 
 const Team = () => {
+    const dispatch = useDispatch();
+    const {team} = useSelector(teamSel);
     const [activeSlide, setActiveSlide] = useState(0);
 
     const handleSlideChange = (swiper) => {
       setActiveSlide(swiper.activeIndex);
     };
+
+    useEffect(() => {
+      dispatch(getTeam());
+    }, [dispatch])
 
   return (
     <MySection classNames={'team'} innerCl={'team__inner'} id='team'>
@@ -51,7 +53,7 @@ const Team = () => {
           }}
           onSlideChange={(swiper) => handleSlideChange(swiper)}
         >
-          {slides.map((_, i) => (
+          {team?.map((obj, i) => (
             <SwiperSlide
               className={clsx(`team__slider-slide`, {'team__slider-slide-active': activeSlide === i})}
               key={i}
@@ -60,20 +62,19 @@ const Team = () => {
                 <img
                   className="team__slider-img"
                   loading="lazy"
-                  src={img}
+                  src={obj.image}
                   width="446"
                   height="729"
                   alt="team"
                 />
                 <div className="team__slider-info">
-                  <p className="team__slider-name title">Иванов Иван</p>
+                  <p className="team__slider-name title">{obj.name}</p>
                   <ul className="team__slider-list">
-                    <li className="team__slider-list-item">
-                      Лучший специалист
+                    {obj.specifications.map((item, i) => ( 
+                    <li className="team__slider-list-item" key={i}>
+                      {item.specification}
                     </li>
-                    <li className="team__slider-list-item">25 лет опыта</li>
-                    <li className="team__slider-list-item">Стоматолог</li>
-                    <li className="team__slider-list-item">4 образования</li>
+                    ))}
                   </ul>
                   <MyBtn classNames="team__slider-btn btn-bg">
                     Записаться на приём

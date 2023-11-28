@@ -1,16 +1,20 @@
 import MyBtn from '@components/_ui/btn/MyBtn';
 import MySection from '@components/_ui/section/MySection';
-import './Hero.scss'
+import './Hero.scss';
 
 import locImg from '@assets/img/location.png';
 import lapaImg from '@assets/img/lapa.png';
 import img from '@assets/img/animals.png';
 import { useBookingModal } from '@hooks/bookingModal';
 import { useResultModal } from '@hooks/resultModal';
+import { useSelector } from 'react-redux';
+import { metaSel } from '@store/slices/meta/metaSlice';
 
 const Hero = () => {
-  const {onOpenBooking} = useBookingModal();
-  const {onOpenResult} = useResultModal()
+  const { city, address, title, subtitle,appointment_time,appointment_time_treatment,tel_num } = useSelector(metaSel);
+
+  const { onOpenBooking } = useBookingModal();
+  const { onOpenResult } = useResultModal();
 
   return (
     <MySection classNames={'hero'} innerCl={'hero__inner'}>
@@ -25,19 +29,21 @@ const Hero = () => {
               height="25"
               alt="location"
             />
-            <span>г. Усть-Каменогорск</span>
+            <span>г. {city}</span>
           </div>
-          <h1 className="hero__title title title-main">Ветеринарная клиника</h1>
-          <p className="hero__subtitle">
-            Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру
-            сгенерировать несколько абзацев более менее осмысленного текста рыбы
-            на русском языке
-          </p>
+          <h1 className="hero__title title title-main">{title}</h1>
+          <p className="hero__subtitle">{subtitle}</p>
           <div className="hero__btn-outer">
-            <MyBtn className="hero__btn btn btn-bg bookingModal__open" onClick={onOpenBooking}>
+            <MyBtn
+              className="hero__btn btn btn-bg bookingModal__open"
+              onClick={onOpenBooking}
+            >
               Записаться на приём
             </MyBtn>
-            <MyBtn className="hero__btn btn btn-br resultModal__open" onClick={onOpenResult}>
+            <MyBtn
+              className="hero__btn btn btn-br resultModal__open"
+              onClick={onOpenResult}
+            >
               Получить результаты
             </MyBtn>
           </div>
@@ -65,26 +71,26 @@ const Hero = () => {
         <div className="hero__card-outer">
           <div className="hero__card">
             <p className="hero__card-key">Телефон:</p>
-            <p className="hero__card-val">8 771 352 12 03</p>
+            <p className="hero__card-val">{tel_num}</p>
           </div>
           <div className="hero__card big">
             <p className="hero__card-key">Время работы:</p>
             <p className="hero__card-val">
               <span className="fw-400">приём врача по записи:</span>
               <br />
-              вт-вс с 9:00 до 17:00, пн - выходной;
+              {appointment_time}
               <br />
               <span className="fw-400">процедурный кабинет:</span>
               <br />
-              пн-вс с 9:00 до 19:00
+              {appointment_time_treatment}
             </p>
           </div>
           <div className="hero__card">
             <p className="hero__card-key">Адрес:</p>
             <p className="hero__card-val">
-              г. Усть-Каменогорск,
+              г. {city},
               <br />
-              ул. Калихан Ыскак 15
+              {address}
             </p>
           </div>
         </div>

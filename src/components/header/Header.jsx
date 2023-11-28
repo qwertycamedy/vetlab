@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { headerSel, setBurger } from '@store/slices/header/headerSlice';
 import { clsx } from 'clsx';
 import useWindowWidth from '@hooks/windowWidth';
+import { metaSel } from '@store/slices/meta/metaSlice';
 
 const ScrollToSection = () => {
   const location = useLocation();
@@ -27,6 +28,7 @@ const ScrollToSection = () => {
 
 const Header = () => {
   const dispatch = useDispatch();
+  const { tel_num, city, address } = useSelector(metaSel);
   const { burger } = useSelector(headerSel);
   const windowWidth = useWindowWidth();
   const location = useLocation();
@@ -35,8 +37,6 @@ const Header = () => {
   const onBurger = () => {
     dispatch(setBurger(!burger));
   };
-
-  console.log(burger);
 
   return (
     <header className="header fixed-block">
@@ -114,16 +114,32 @@ const Header = () => {
                   </Link>
                 </li>
                 <li className="header__nav-item">
-                  <Link
-                    to="/price"
-                    className="header__nav-link link link-ul-h link-ul"
-                    onClick={() => {
-                      windowWidth < 1170 && onBurger();
-                    }}
-                  >
-                    {' '}
-                    Прайс
-                  </Link>
+                  {location.pathname.length > 1 ? (
+                    <div
+                      onClick={() => {
+                        navigate('/#price');
+                        windowWidth < 1170 && onBurger();
+                      }}
+                      className="header__nav-link link link-ul-h link-ul"
+                    >
+                      Прайс
+                    </div>
+                  ) : (
+                    <ScrollLink
+                      to="price"
+                      offset={-50}
+                      duration={500}
+                      smooth
+                      spy
+                      className="header__nav-link link link-ul-h link-ul"
+                      onClick={() => {
+                        windowWidth < 1170 && onBurger();
+                      }}
+                    >
+                      {' '}
+                      Прайс
+                    </ScrollLink>
+                  )}
                 </li>
                 <li className="header__nav-item">
                   <Link
@@ -139,9 +155,9 @@ const Header = () => {
                 </li>
               </ul>
               <ul className="header__contacts">
-                <li className="header__contacts-item">г. Усть-Каменогорск</li>
-                <li className="header__contacts-item">ул. Калихан Ыскак 15</li>
-                <li className="header__contacts-item">8 771 352 12 03</li>
+                <li className="header__contacts-item">г. {city}</li>
+                <li className="header__contacts-item">{address}</li>
+                <li className="header__contacts-item">{tel_num}</li>
               </ul>
             </nav>
             <button
@@ -152,7 +168,7 @@ const Header = () => {
             </button>
           </div>
           <Link className="header__btn-link" to="tel:87713521203">
-            <MyBtn className="header__btn btn btn-bg">8 771 352 12 03</MyBtn>
+            <MyBtn className="header__btn btn btn-bg">{tel_num}</MyBtn>
           </Link>
           <ScrollToSection />
         </div>

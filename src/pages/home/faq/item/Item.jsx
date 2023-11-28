@@ -17,10 +17,9 @@ const Item = ({ acc, curAcc, onAcc }) => {
             ? { maxHeight: itemRef.current.scrollHeight + 'px' }
             : { height: '0px' }
         }
+        dangerouslySetInnerHTML={{ __html: acc?.description }}
         ref={itemRef}
-      >
-        {acc.descr}
-      </div>
+        />
     </div>
   );
 };
