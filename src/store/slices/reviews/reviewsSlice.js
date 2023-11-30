@@ -7,8 +7,6 @@ export const getReviews = createAsyncThunk('reviews/getReviews', async () => {
     try {
         const {data} = await axios.get(`${process.env.REACT_APP_API_URL}reviews`);
 
-        console.log(data);
-
         return data;
     } catch (err) {
         console.log(`ошибка при получении данных reviews`);

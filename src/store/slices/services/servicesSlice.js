@@ -3,21 +3,40 @@ import axios from 'axios';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
-export const getServices = createAsyncThunk('services/getServices', async () => {
+export const getServices = createAsyncThunk(
+  'services/getServices',
+  async () => {
     try {
-        const {data} = await axios.get(`${process.env.REACT_APP_API_URL}services`);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}services`,
+      );
 
-        return data
+      return data;
     } catch (err) {
-        console.log(`ошибка при получении данных services`);
+      console.log(`ошибка при получении данных services`);
     }
-})
+  },
+);
 
-export const getServiceSlug = createAsyncThunk('services/')
+export const getService = createAsyncThunk(
+  'services/getService',
+  async ({ slug }) => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}service/${slug}`,
+      );
+      console.log(data);
+      return data;
+    } catch (err) {
+      console.log(`ошибка при получении данных newstory`);
+    }
+  },
+);
 
 const initialState = {
-    servicesLoadStatus: 'idle',
-    services: null,
+  servicesLoadStatus: 'idle',
+  services: null,
+  service: null,
 };
 
 const servicesSlice = createSlice({
@@ -26,17 +45,29 @@ const servicesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-        .addCase(getServices.pending, (state) => {
-            state.servicesLoadStatus = loadStatus.pending;
-        })
-        .addCase(getServices.fulfilled, (state, action) => {
-            state.servicesLoadStatus = loadStatus.fulfilled;
-            state.services = action.payload.data;
-        })
-        .addCase(getServices.rejected, (state) => {
-            state.servicesLoadStatus = loadStatus.rejected
-        })
-  }
+      .addCase(getServices.pending, (state) => {
+        state.servicesLoadStatus = loadStatus.pending;
+      })
+      .addCase(getServices.fulfilled, (state, action) => {
+        state.servicesLoadStatus = loadStatus.fulfilled;
+        state.services = action.payload.data;
+      })
+      .addCase(getServices.rejected, (state) => {
+        state.servicesLoadStatus = loadStatus.rejected;
+      });
+
+    builder
+      .addCase(getService.pending, (state) => {
+        state.servicesLoadStatus = loadStatus.pending;
+      })
+      .addCase(getService.fulfilled, (state, action) => {
+        state.servicesLoadStatus = loadStatus.fulfilled;
+        state.service = action.payload.data;
+      })
+      .addCase(getService.rejected, (state) => {
+        state.servicesLoadStatus = loadStatus.rejected;
+      });
+  },
 });
 
 // export const {} = servicesSlice.actions;

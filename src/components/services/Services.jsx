@@ -31,7 +31,7 @@ const Services = () => {
                 height="150"
                 alt="img"
               />
-              <Link to={`price/${obj.slug}`}>
+              <Link to={`/price/${obj.slug}`}>
               <MyBtn classNames="services__card-btn btn-br">Прайс</MyBtn>
               </Link>
             </div>

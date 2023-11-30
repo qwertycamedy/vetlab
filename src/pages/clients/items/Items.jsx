@@ -1,9 +1,6 @@
 import MySection from '@components/_ui/section/MySection';
 
-import img from '@assets/img/client.png';
-
-const Items = () => {
-  const clients = [1, 2, 3, 5, 6, 7];
+const Items = ({clients}) => {
   return (
     <MySection classNames={'clients'} innerCl={'clients__inner'}>
       <h1 className="clients__title title title-section">Наши пациенты</h1>
@@ -13,7 +10,7 @@ const Items = () => {
             <img
               className="clients__card-img"
               loading="lazy"
-              src={img}
+              src={client.image}
               width="305"
               height="260"
               alt="cli"

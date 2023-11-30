@@ -1,8 +1,13 @@
 import MySection from "@components/_ui/section/MySection"
-import img from '@assets/img/news.jpg';
+import { formatDate } from "@hooks/formatDate";
 
 
-const Story = () => {
+const Story = ({newstory}) => {
+
+  const createdAt = formatDate(newstory?.created_at, true, true, true, false, false);
+
+
+
   return (
     <MySection classNames={'newstory'} innerCl={'newstory__inner'}>
     <h1 className="newstory__title title title-section">Новости</h1>
@@ -10,50 +15,16 @@ const Story = () => {
       <img
         className="newstory__block-img"
         loading="lazy"
-        src={img}
+        src={newstory?.preview}
         width="367"
         height="360"
         alt="img"
       />
       <div className="newstory__block-info">
-        <h3 className="newstory__block-title title">Всемирный день животных</h3>
-        <p className="newstory__block-text">
-          По своей сути рыбатекст является альтернативой традиционному
-          lorem ipsum, который вызывает у некторых людей недоумение при
-          попытках прочитать рыбу текст. В отличии от lorem ipsum, текст
-          рыба на русском языке наполнит любой макет непонятным смыслом
-          и придаст неповторимый колорит советских времен.
-          <br />
-          <br />
-
-          По своей сути рыбатекст является альтернативой традиционному
-          lorem ipsum, который вызывает у некторых людей недоумение при
-          попытках прочитать рыбу текст. В отличии от lorem ipsum, текст
-          рыба на русском языке наполнит любой макет непонятным смыслом
-          и придаст неповторимый колорит советских времен.
-          <br />
-          <br />
-          По своей сути рыбатекст является альтернативой традиционному
-          lorem ipsum, который вызывает у некторых людей недоумение при
-          попытках прочитать рыбу текст. В отличии от lorem ipsum, текст
-          рыба на русском языке наполнит любой макет непонятным смыслом
-          и придаст неповторимый колорит советских времен.
-          <br />
-          <br />
-          По своей сути рыбатекст является альтернативой традиционному
-          lorem ipsum, который вызывает у некторых людей недоумение при
-          попытках прочитать рыбу текст. В отличии от lorem ipsum, текст
-          рыба на русском языке наполнит любой макет непонятным смыслом
-          и придаст неповторимый колорит советских времен.
-          <br />
-          <br />
-          По своей сути рыбатекст является альтернативой традиционному
-          lorem ipsum, который вызывает у некторых людей недоумение при
-          попытках прочитать рыбу текст. В отличии от lorem ipsum, текст
-          рыба на русском языке наполнит любой макет непонятным смыслом
-          и придаст неповторимый колорит советских времен.
-        </p>
-        <span className="newstory__block-date">11.10.2023</span>
+        <h3 className="newstory__block-title title">{newstory?.title}</h3>
+        <p className="newstory__block-text" 
+        dangerouslySetInnerHTML={{ __html: newstory?.description }} />
+        <span className="newstory__block-date">{createdAt}</span>
       </div>
     </div>
     </MySection>
