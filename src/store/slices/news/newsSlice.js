@@ -3,10 +3,9 @@ import axios from 'axios';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
-export const getNews = createAsyncThunk('news/getNews', async () => {
+export const getNews = createAsyncThunk('news/getNews', async ({curPage}) => {
   try {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_URL}news`);
-    
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URL}news?page=${curPage}`);
     return data;
   } catch (err) {
     console.log(`ошибка при получении данных news`);
@@ -31,12 +30,20 @@ export const getNewstory = createAsyncThunk(
 const initialState = {
   newsLoadStatus: 'idle',
   news: null,
+  curPage: 1,
+  prev: null,
+  next: null,
   newstory: null,
 };
 
 const newsSlice = createSlice({
   name: 'news',
   initialState,
+  reducers: {
+    setCurPage: (state,action) => {
+      state.curPage = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getNews.pending, (state) => {
@@ -45,6 +52,8 @@ const newsSlice = createSlice({
       .addCase(getNews.fulfilled, (state, action) => {
         state.newsLoadStatus = loadStatus.fulfilled;
         state.news = action.payload.data;
+        state.prev = action.payload.links.prev;
+        state.next = action.payload.links.next;
       })
       .addCase(getNews.rejected, (state) => {
         state.newsLoadStatus = loadStatus.rejected;
@@ -63,7 +72,7 @@ const newsSlice = createSlice({
   },
 });
 
-// export const {} = newsSlice.actions;
+export const {setCurPage} = newsSlice.actions;
 export const newsSel = (state) => state.news;
 
 export default newsSlice.reducer;

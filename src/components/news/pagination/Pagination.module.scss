@@ -1,0 +1,20 @@
+.pag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn {
+    padding: 0 !important;
+    width: 40px;
+    height: 40px;
+}
+
+.btn__disabled {
+    pointer-events: none;
+    background: var(--gray-light) !important;
+    border: 1px solid var(--gray) !important;
+    color: var(--gray) !important;
+    opacity: .5;
+}
