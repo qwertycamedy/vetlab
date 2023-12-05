@@ -18,7 +18,7 @@ const PricePage = () => {
 
   return (
     <MyPage metaTitle="Прайслист" metaDescr="прайслист ВетЛаб">
-      <Table priceList={service?.pricelist} />
+      <Table title={service?.title} priceList={service?.pricelist} />
       <Services />
     </MyPage>
   );
