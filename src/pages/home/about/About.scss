@@ -31,9 +31,9 @@
       gap: 20px;
     }
 
-    padding: 50px;
+    padding: 50px; 
+    background: var(--gray-light);
     border-radius: var(--desktop-radius);
-    box-shadow: var(--block-shadow);
     display: flex;
     flex-direction: column;
     gap: 7px;

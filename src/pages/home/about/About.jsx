@@ -18,7 +18,7 @@ const About = () => {
       <div className="about__card-outer">
         {
           about?.map(obj => (
-            <div className="about__card" key={obj.id} style={{background: obj.color}}>
+            <div className="about__card" key={obj.id}>
               <p className="about__card-title title">Работаем круглосуточно</p>
               <p className="about__card-text">
                 Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру

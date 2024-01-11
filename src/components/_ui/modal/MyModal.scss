@@ -12,14 +12,15 @@
     justify-content: center;
     flex-direction: column;
 
-    background: rgba(#000, .05);
+    background: rgba(#000, 0.05);
     backdrop-filter: blur(4px);
 
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 
-    transition: opacity .4s linear, visibility .4s linear, pointer-events .4s linear;
+    transition: opacity 0.4s linear, visibility 0.4s linear,
+      pointer-events 0.4s linear;
 
     &.active {
       opacity: 1;
@@ -29,6 +30,7 @@
   }
 
   background: var(--light);
+  border-radius: 20px;
   padding: 20px 30px 80px;
   display: flex;
   align-items: center;
@@ -86,7 +88,7 @@
 
   &__input {
     &::placeholder {
-      color: #D9D9D9;
+      color: #d9d9d9;
     }
   }
 
@@ -97,7 +99,7 @@
   }
 }
 
-@media(max-width: 1170px) {
+@media (max-width: 1170px) {
   .modal {
     height: 100vh;
     padding: 20px;
