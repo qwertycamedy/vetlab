@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-const MyInput = ({
+const MyInput = forwardRef(({
   outerCl,
   labelCl,
   inputCl,
@@ -14,7 +14,8 @@ const MyInput = ({
   placeholder,
   value,
   setValue,
-}) => {
+  ...props
+}, ref) => {
   const dispatch = useDispatch();
   return (
     <div className={`${outerCl} input-outer`}>
@@ -27,6 +28,7 @@ const MyInput = ({
           required={required}
           value={value}
           onChange={(e) => dispatch(setValue(e.target.value))}
+          ref={ref}
         />
         {ico && (
           <img
@@ -41,6 +43,6 @@ const MyInput = ({
       </label>
     </div>
   );
-};
+});
 
 export default MyInput;

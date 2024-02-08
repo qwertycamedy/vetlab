@@ -1,49 +1,51 @@
-const { createSlice } = require('@reduxjs/toolkit');
+import { loadStatus } from '@store/loadStatus';
+import axios from 'axios';
+
+const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
+
+export const getAvailableTime = createAsyncThunk(
+  'booking/getAvailableTime',
+  async ({ queryParams }) => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}available-time-slots2?date=${queryParams.date}&service_id=${queryParams.serviceId}&specialist_id=${queryParams.specialistId}`,
+      );
+
+      return data;
+    } catch (err) {
+      console.log(`ошибка при получении данных свободного времени`);
+    }
+  },
+);
+
+
+
+export const bookAppointment = createAsyncThunk(
+  'booking/bookAppointment',
+  async ({ bodyParams }) => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_URL}appointments-book2`,
+        bodyParams,
+      );
+
+      return data;
+    } catch (err) {
+      console.log(`ошибка при отправке записи на прием`);
+    }
+  },
+);
 
 const initialState = {
+  bookingLoadStatus: 'idle',
   bookingModal: false,
-  serviceOptions: [
-    {
-      id: 1,
-      value: 'Значение 1',
-    },
-    {
-      id: 2,
-      value: 'Значение 2',
-    },
-    {
-      id: 3,
-      value: 'Значение 3',
-    },
-    {
-      id: 4,
-      value: 'Значение 4',
-    },
-  ],
+
   serviceOptSel: null,
-  
-  teamOptions: [
-    {
-      id: 1,
-      value: 'Значение 1',
-    },
-    {
-      id: 2,
-      value: 'Значение 2',
-    },
-    {
-      id: 3,
-      value: 'Значение 3',
-    },
-    {
-      id: 4,
-      value: 'Значение 4',
-    },
-  ],
   teamOptSel: null,
 
   dateInput: '',
-  timeInput: '',
+  timeSlots: null,
+  timeOptSel: null,
 
   nameInput: '',
   telInput: '',
@@ -64,14 +66,14 @@ const bookingSlice = createSlice({
     setTeamOptSel: (state, action) => {
       state.teamOptSel = action.payload;
     },
+    setTimeOptSel: (state, action) => {
+      state.timeOptSel = action.payload;
+    },
 
     setDateInput: (state, action) => {
       state.dateInput = action.payload;
     },
-    setTimeInput: (state, action) => {
-      state.timeInput = action.payload;
-    },
-    
+
     setNameInput: (state, action) => {
       state.nameInput = action.payload;
     },
@@ -79,14 +81,48 @@ const bookingSlice = createSlice({
       state.telInput = action.payload;
     },
 
-    setTermsChecked: (state,action) => {
+    setTermsChecked: (state, action) => {
       state.termsChecked = action.payload;
     },
   },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAvailableTime.pending, (state) => {
+        state.bookingLoadStatus = loadStatus.pending;
+      })
+      .addCase(getAvailableTime.fulfilled, (state, action) => {
+        state.bookingLoadStatus = loadStatus.fulfilled;
+        state.timeSlots = action.payload.available_time_slots;
+      })
+      .addCase(getAvailableTime.rejected, (state) => {
+        state.bookingLoadStatus = loadStatus.rejected;
+      });
+    builder
+      .addCase(bookAppointment.pending, (state) => {
+        state.bookingLoadStatus = loadStatus.pending;
+      })
+      .addCase(bookAppointment.fulfilled, (state) => {
+        state.bookingLoadStatus = loadStatus.fulfilled;
+        state.bookingModal = false
+      })
+      .addCase(bookAppointment.rejected, (state) => {
+        state.bookingLoadStatus = loadStatus.rejected;
+      });
+  },
 });
 
-export const { setBookingModal, setServiceOptSel, setTeamOptSel, setTermsChecked, setDateInput, setTimeInput, setNameInput, setTelInput } =
-  bookingSlice.actions;
+export const {
+  setBookingModal,
+  setServiceOptSel,
+  setTeamOptSel,
+  setTimeOptSel,
+  setTermsChecked,
+  setDateInput,
+  setTimeInput,
+  setNameInput,
+  setTelInput,
+} = bookingSlice.actions;
 export const bookingSel = (state) => state.booking;
 
 export default bookingSlice.reducer;

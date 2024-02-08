@@ -1,7 +1,6 @@
 import React from 'react';
 
 import selectArrow from '@assets/img/select-arrow.svg';
-import { useDispatch } from 'react-redux';
 
 const MySelect = ({
   outerCl,
@@ -15,18 +14,19 @@ const MySelect = ({
   placeholder,
   placeholderCl,
   selected,
-  setSelected,
+  onChange
 }) => {
-  const dispatch = useDispatch();
-  const onChange = (e) => {
-    const value = e.target.value;
-    dispatch(setSelected(value));
-  }
+
   return (
     <div className={`${outerCl} select-outer`}>
       {title && <span className={`${titleCl} select-title`}>{title}</span>}
       <label className={`${labelCl} select-label`}>
-        <select className={`${selectCl} select radius-mobile`} value={selected ? selected.value : placeholder} onChange={onChange} required>
+        <select
+          className={`${selectCl} select radius-mobile`}
+          value={selected ? selected.value : placeholder}
+          onChange={onChange}
+          required
+        >
           <option
             className={`${optionCl} ${placeholderCl} option option-placeholder`}
             value={placeholder}
@@ -35,9 +35,13 @@ const MySelect = ({
           >
             {placeholder}
           </option>
-          {options?.map((option) => (
-            <option className={`${optionCl} option`} value={option.value} key={option.id}>
-              {option.value}
+          {options?.map((option, i) => (
+            <option
+              className={`${optionCl} option`}
+              value={option.title ? option.title : option.name ? option.name : option}
+              key={i}
+            >
+              {option.title ? option.title : option.name ? option.name : option}
             </option>
           ))}
         </select>
