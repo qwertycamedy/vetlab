@@ -39,6 +39,7 @@ export const bookAppointment = createAsyncThunk(
 const initialState = {
   bookingLoadStatus: 'idle',
   bookingModal: false,
+  further: false,
 
   serviceOptSel: null,
   teamOptSel: null,
@@ -59,6 +60,14 @@ const bookingSlice = createSlice({
   reducers: {
     setBookingModal: (state, action) => {
       state.bookingModal = action.payload;
+      state.further = false;
+      state.nameInput = "";
+      state.telInput = "";
+      state.dateInput = "";
+      state.teamOptSel = null;
+      state.timeSlots = null;
+      state.serviceOptSel = null;
+      state.timeOptSel = null;
     },
     setServiceOptSel: (state, action) => {
       state.serviceOptSel = action.payload;
@@ -94,6 +103,7 @@ const bookingSlice = createSlice({
       .addCase(getAvailableTime.fulfilled, (state, action) => {
         state.bookingLoadStatus = loadStatus.fulfilled;
         state.timeSlots = action.payload.available_time_slots;
+        state.further = true;
       })
       .addCase(getAvailableTime.rejected, (state) => {
         state.bookingLoadStatus = loadStatus.rejected;
@@ -105,6 +115,7 @@ const bookingSlice = createSlice({
       .addCase(bookAppointment.fulfilled, (state) => {
         state.bookingLoadStatus = loadStatus.fulfilled;
         state.bookingModal = false
+        state.further =false;
       })
       .addCase(bookAppointment.rejected, (state) => {
         state.bookingLoadStatus = loadStatus.rejected;

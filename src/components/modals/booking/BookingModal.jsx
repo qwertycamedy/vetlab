@@ -19,7 +19,6 @@ import {
 } from '@store/slices/booking/bookingSlice';
 import { servicesSel } from '@store/slices/services/servicesSlice';
 import { teamSel } from '@store/slices/team/teamSlice';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TelInput from '@components/telInput/TelInput';
 
@@ -36,12 +35,12 @@ const BookingModal = () => {
     timeInput,
     nameInput,
     telInput,
+    further,
   } = useSelector(bookingSel);
   const { services } = useSelector(servicesSel);
   const { team } = useSelector(teamSel);
 
   const { onCloseBooking, bookingModal } = useBookingModal();
-  const [further, setFurther] = useState(false);
 
   const onFurther = () => {
     if (
@@ -58,21 +57,9 @@ const BookingModal = () => {
             specialistId: teamOptSel.id,
           },
         }),
-      ).then(() => {
-        setFurther(true);
-      });
+      )
     }
   };
-
-  // {
-  //   "name_client": "Fedor Novikovvv",
-  //   "phone_number": "77714555532",
-  //   "service_id": 1,
-  //   "specialist_id": 1,
-  //   "date_appointment": "2024-01-30",
-  //   "time_slot": "11:30",
-  //   "data_processing_consent": true
-  // }
 
   const onBook = () => {
     const cleanedPhoneNumber = telInput.replace(/\D/g, '');
@@ -93,9 +80,9 @@ const BookingModal = () => {
         'Ваша заявка пришла к нам на рассмотрение. Наши специалисты скоро с Вами свяжутся!',
       );
     });
-  };
 
-  console.log(nameInput, telInput);
+    onCloseBooking();
+  };
 
   const onChangeService = (e) => {
     const value = e.target.value;
@@ -113,7 +100,6 @@ const BookingModal = () => {
   const onChangeTime = (e) => {
     const value = e.target.value;
     const newOptSel = timeSlots.find((item) => item === value);
-    console.log(newOptSel);
     dispatch(setTimeOptSel(newOptSel));
   };
 
