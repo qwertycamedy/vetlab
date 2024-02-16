@@ -57,7 +57,7 @@ const BookingModal = () => {
             specialistId: teamOptSel.id,
           },
         }),
-      )
+      );
     }
   };
 
@@ -135,7 +135,7 @@ const BookingModal = () => {
             <>
               <MySelect
                 title={'Время'}
-                options={timeSlots}
+                options={timeSlots ? timeSlots : null}
                 placeholder={
                   timeSlots ? 'Выберите из списка' : 'Нет времени на запись'
                 }

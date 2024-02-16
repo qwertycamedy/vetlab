@@ -1,9 +1,10 @@
 .header {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   z-index: 9999;
+  background: var(--light);
   &__inner {
     display: flex;
     align-items: center;

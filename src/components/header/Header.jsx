@@ -1,6 +1,5 @@
 import './Header.scss';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Link as ScrollLink } from 'react-scroll';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MyBtn from '@components/_ui/btn/MyBtn';
 import Logo from '@components/logo/Logo';
 import { useEffect } from 'react';
@@ -9,6 +8,9 @@ import { headerSel, setBurger } from '@store/slices/header/headerSlice';
 import { clsx } from 'clsx';
 import useWindowWidth from '@hooks/windowWidth';
 import { metaSel } from '@store/slices/meta/metaSlice';
+import Link from './link/Link';
+import { disableScroll } from '@hooks/disableScroll';
+import { enableScroll } from '@hooks/enableScroll';
 
 const ScrollToSection = () => {
   const location = useLocation();
@@ -33,9 +35,38 @@ const Header = () => {
   const windowWidth = useWindowWidth();
   const location = useLocation();
   const navigate = useNavigate();
+  const headerHeight = 64;
+
+  useEffect(() => {
+    navigate(location.pathname, { replace: true, state: {} });
+  }, []);
+
+  useEffect(() => {
+    console.log(location.state);
+    if (location.state?.sectionId) {
+      const sectionId = location.state.sectionId;
+      setTimeout(() => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          console.log('ttrruuee');
+          console.log(section);
+          window.scrollTo({
+            top: section.offsetTop - headerHeight,
+            behavior: 'smooth',
+          });
+        }
+      }, 300);
+    }
+  }, [location]);
 
   const onBurger = () => {
-    dispatch(setBurger(!burger));
+    if (!burger) {
+      dispatch(setBurger(true));
+      disableScroll();
+    } else {
+      dispatch(setBurger(false));
+      enableScroll();
+    }
   };
 
   return (
@@ -47,107 +78,54 @@ const Header = () => {
             <nav className={clsx('header__nav', { active: burger })}>
               <ul className="header__nav-list">
                 <li className="header__nav-item">
-                  {location.pathname.length > 1 ? (
-                    <div
-                      onClick={() => {
-                        navigate('/#about');
-                        windowWidth < 1170 && onBurger();
-                      }}
-                      className="header__nav-link link link-ul-h link-ul"
-                    >
-                      О нас
-                    </div>
-                  ) : (
-                    <ScrollLink
-                      to={'about'}
-                      offset={-50}
-                      duration={500}
-                      smooth
-                      spy
-                      className="header__nav-link link link-ul-h link-ul"
-                      onClick={() => {
-                        windowWidth < 1170 && onBurger();
-                      }}
-                    >
-                      О нас
-                    </ScrollLink>
-                  )}
+                  <Link
+                    className="header__nav-link link link-ul-h link-ul"
+                    to={'/'}
+                    sectionId={'about'}
+                    onBurger={onBurger}
+                  >
+                    О нас
+                  </Link>
                 </li>
                 <li className="header__nav-item">
-                  {location.pathname.length > 1 ? (
-                    <div
-                      onClick={() => {
-                        navigate('/#team');
-                        windowWidth < 1170 && onBurger();
-                      }}
+                  {
+                    <Link
                       className="header__nav-link link link-ul-h link-ul"
+                      to={'/'}
+                      sectionId={'team'}
+                      onBurger={onBurger}
                     >
                       Наши специалисты
-                    </div>
-                  ) : (
-                    <ScrollLink
-                      to="team"
-                      offset={-50}
-                      duration={500}
-                      smooth
-                      spy
-                      className="header__nav-link link link-ul-h link-ul"
-                      onClick={() => {
-                        windowWidth < 1170 && onBurger();
-                      }}
-                    >
-                      {' '}
-                      Наши специалисты
-                    </ScrollLink>
-                  )}
+                    </Link>
+                  }
                 </li>
                 <li className="header__nav-item">
                   <Link
                     to="/clients"
                     className="header__nav-link link link-ul-h link-ul"
-                    onClick={() => {
-                      windowWidth < 1170 && onBurger();
-                    }}
+                    onBurger={onBurger}
                   >
                     {' '}
                     Наши пациенты
                   </Link>
                 </li>
                 <li className="header__nav-item">
-                  {location.pathname.length > 1 ? (
-                    <div
-                      onClick={() => {
-                        navigate('/#price');
-                        windowWidth < 1170 && onBurger();
-                      }}
+                  {
+                    <Link
                       className="header__nav-link link link-ul-h link-ul"
+                      to={'/'}
+                      sectionId={'price'}
+                      onBurger={onBurger}
                     >
                       Прайс
-                    </div>
-                  ) : (
-                    <ScrollLink
-                      to="price"
-                      offset={-50}
-                      duration={500}
-                      smooth
-                      spy
-                      className="header__nav-link link link-ul-h link-ul"
-                      onClick={() => {
-                        windowWidth < 1170 && onBurger();
-                      }}
-                    >
-                      {' '}
-                      Прайс
-                    </ScrollLink>
-                  )}
+                    </Link>
+                  }
                 </li>
                 <li className="header__nav-item">
                   <Link
                     to="/news"
                     className="header__nav-link link link-ul-h link-ul"
-                    onClick={() => {
-                      windowWidth < 1170 && onBurger();
-                    }}
+                    onBurger={onBurger}
                   >
                     {' '}
                     Новости
