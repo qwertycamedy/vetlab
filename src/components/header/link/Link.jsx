@@ -9,20 +9,21 @@ const Link = ({ to, sectionId, onBurger, children, className }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    if (windowWidth < 1170) {
+      onBurger();
+    }
     if (location.pathname !== to) {
       navigate(to, { state: { sectionId: sectionId } });
       console.log(sectionId);
     } else {
       scrollToSection();
-    }
-
-    if(windowWidth < 1170) {
-        onBurger()
+      console.log('hello');
     }
   };
 
   const scrollToSection = () => {
     const section = document.getElementById(sectionId);
+    console.log(section);
     if (section) {
       window.scrollTo({
         top: section.offsetTop - headerHeight,
