@@ -9,22 +9,24 @@ import { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTeam, teamSel } from '@store/slices/team/teamSlice';
+import { useBookingModal } from '@hooks/bookingModal';
 
 const Team = () => {
-    const dispatch = useDispatch();
-    const {team} = useSelector(teamSel);
-    const [activeSlide, setActiveSlide] = useState(0);
+  const dispatch = useDispatch();
+  const { team } = useSelector(teamSel);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const { onOpenBooking } = useBookingModal();
 
-    const handleSlideChange = (swiper) => {
-      setActiveSlide(swiper.activeIndex);
-    };
+  const handleSlideChange = (swiper) => {
+    setActiveSlide(swiper.activeIndex);
+  };
 
-    useEffect(() => {
-      dispatch(getTeam());
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(getTeam());
+  }, [dispatch]);
 
   return (
-    <MySection classNames={'team'} innerCl={'team__inner'} id='team'>
+    <MySection classNames={'team'} innerCl={'team__inner'} id="team">
       <h3 className="team__title title title-section">Наши специалисты</h3>
       <div className="team__slider-outer slider-outer">
         <Swiper
@@ -55,7 +57,9 @@ const Team = () => {
         >
           {team?.map((obj, i) => (
             <SwiperSlide
-              className={clsx(`team__slider-slide`, {'team__slider-slide-active': activeSlide === i})}
+              className={clsx(`team__slider-slide`, {
+                'team__slider-slide-active': activeSlide === i,
+              })}
               key={i}
             >
               <div className="team__slider-content">
@@ -70,13 +74,16 @@ const Team = () => {
                 <div className="team__slider-info">
                   <p className="team__slider-name title">{obj.name}</p>
                   <ul className="team__slider-list">
-                    {obj.specifications.map((item, i) => ( 
-                    <li className="team__slider-list-item" key={i}>
-                      {item.specification}
-                    </li>
+                    {obj.specifications.map((item, i) => (
+                      <li className="team__slider-list-item" key={i}>
+                        {item.specification}
+                      </li>
                     ))}
                   </ul>
-                  <MyBtn classNames="team__slider-btn btn-bg">
+                  <MyBtn
+                    classNames="team__slider-btn btn-bg"
+                    onClick={onOpenBooking}
+                  >
                     Записаться на приём
                   </MyBtn>
                 </div>
@@ -85,7 +92,9 @@ const Team = () => {
           ))}
         </Swiper>
       </div>
-      <MyBtn classNames="team__common-btn btn-bg">Записаться на прием</MyBtn>
+      <MyBtn classNames="team__common-btn btn-bg" onClick={onOpenBooking}>
+        Записаться на прием
+      </MyBtn>
     </MySection>
   );
 };

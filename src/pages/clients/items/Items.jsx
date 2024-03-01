@@ -1,6 +1,6 @@
 import MySection from '@components/_ui/section/MySection';
 
-const Items = ({clients}) => {
+const Items = ({ clients }) => {
   return (
     <MySection classNames={'clients'} innerCl={'clients__inner'}>
       <h1 className="clients__title title title-section">Наши пациенты</h1>

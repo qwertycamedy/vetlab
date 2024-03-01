@@ -42,6 +42,8 @@ const BookingModal = () => {
 
   const { onCloseBooking, bookingModal } = useBookingModal();
 
+  console.log(team, teamOptSel)
+
   const onFurther = () => {
     if (
       dateInput !== '' &&

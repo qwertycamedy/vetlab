@@ -10,6 +10,14 @@
         align-items: center;
         justify-content: space-between;
         gap: 20px;
+  
+        transition: background .2s linear;
+  
+        @media(any-hover: hover) {
+          &:hover {
+            background: var(--blue-light);
+          }
+        }
       }
   
       &-head {
@@ -29,14 +37,6 @@
         font-weight: 400;
         background: transparent;
         color: var(--dark);
-  
-        transition: background .2s linear;
-  
-        @media(any-hover: hover) {
-          &:hover {
-            background: var(--blue-light);
-          }
-        }
       }
 
       &-name {

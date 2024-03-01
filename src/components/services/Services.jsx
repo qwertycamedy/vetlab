@@ -19,24 +19,26 @@ const Services = () => {
     <MySection classNames={'services'} innerCl={'services__inner'} id={'price'}>
       <h3 className="services__title title title-section">Услуги</h3>
       <div className="services__card-outer">
-        {
-          services?.map(obj => (
-            <div className="services__card" key={obj.id} style={{background: `${obj.color} !important`, width: obj.width}}>
-              <p className="services__card-title title">{obj.title}</p>
-              <img
-                className="services__card-img"
-                loading="lazy"
-                src={obj.preview}
-                width="150"
-                height="150"
-                alt="img"
-              />
-              <Link to={`/price/${obj.slug}`}>
+        {services?.map((obj) => (
+          <div
+            className="services__card"
+            key={obj.id}
+            style={{ background: `${obj.color} !important`, width: obj.width }}
+          >
+            <p className="services__card-title title">{obj.title}</p>
+            <img
+              className="services__card-img"
+              loading="lazy"
+              src={obj.preview}
+              width="150"
+              height="150"
+              alt="img"
+            />
+            <Link to={`/price/${obj.slug}`}>
               <MyBtn classNames="services__card-btn btn-br">Прайс</MyBtn>
-              </Link>
-            </div>
-          ))
-        }
+            </Link>
+          </div>
+        ))}
       </div>
     </MySection>
   );
