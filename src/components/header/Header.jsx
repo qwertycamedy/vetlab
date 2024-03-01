@@ -11,6 +11,7 @@ import { metaSel } from '@store/slices/meta/metaSlice';
 import Link from './link/Link';
 import { disableScroll } from '@hooks/disableScroll';
 import { enableScroll } from '@hooks/enableScroll';
+import { Link as RouterLink } from 'react-router-dom';
 
 const ScrollToSection = () => {
   const location = useLocation();
@@ -40,6 +41,9 @@ const Header = () => {
   useEffect(() => {
     navigate(location.pathname, { replace: true, state: {} });
   }, []);
+
+  let formattedNumber = tel_num.replace(/\s+/g, '');
+  formattedNumber = '+7' + formattedNumber.substring(1);
 
   useEffect(() => {
     console.log(location.state);
@@ -145,9 +149,13 @@ const Header = () => {
               <span className="header__burger-line"></span>
             </button>
           </div>
-          <Link className="header__btn-link" to="tel:87713521203">
+          <RouterLink
+            className="header__btn-link"
+            to={`https://wa.me/${formattedNumber}`}
+            target="_blank"
+          >
             <MyBtn className="header__btn btn btn-bg">{tel_num}</MyBtn>
-          </Link>
+          </RouterLink>
           <ScrollToSection />
         </div>
       </div>

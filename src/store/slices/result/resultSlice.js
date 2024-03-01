@@ -11,7 +11,7 @@ export const getVerCode = createAsyncThunk(
     };
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}new_send-verification-code`,
+        `${process.env.REACT_APP_API_URL}new_send-verification-code_with_sms`,
         bodyParams,
       );
 
