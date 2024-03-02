@@ -41,7 +41,9 @@ export const getResults = createAsyncThunk(
 const initialState = {
   resultLoadStatus: 'idle',
   resultModal: false,
-  further: false,
+  phoneModal: true,
+  codeModal: false,
+  downloadModal: false,
   telInput: '',
   verificationCode: '',
   results: null,
@@ -63,6 +65,10 @@ const resultSlice = createSlice({
     setVerificationCode: (state, action) => {
       state.verificationCode = action.payload;
     },
+
+    setDownloadModal: (state,action) => {
+      state.downloadModal = action.payload
+    },
   },
 
   extraReducers: (builder) => {
@@ -73,7 +79,9 @@ const resultSlice = createSlice({
       .addCase(getVerCode.fulfilled, (state) => {
         state.resultLoadStatus = loadStatus.fulfilled;
         alert('Код подтверждения отправлен!');
-        state.further = true;
+        state.phoneModal = false;
+        state.codeModal = true;
+        state.downloadModal = false;
       })
       .addCase(getVerCode.rejected, (state) => {
         state.resultLoadStatus = loadStatus.rejected;
@@ -88,10 +96,18 @@ const resultSlice = createSlice({
         if (action.payload === undefined || action.payload?.results?.length < 1) {
           alert('Результаты по данному номеру не найдены');
           state.resultModal = false;
-          state.further = false;
+          state.phoneModal = true;
+          state.codeModal = false;
+          state.downloadModal = false;
           state.telInput = '';
+          state.results = null;
           return;
         }
+
+        state.results = action.payload.results;
+        state.phoneModal = false;
+        state.codeModal = false;
+        state.downloadModal = true;
       })
       .addCase(getResults.rejected, (state) => {
         state.resultLoadStatus = loadStatus.rejected;
@@ -99,7 +115,7 @@ const resultSlice = createSlice({
   },
 });
 
-export const { setResultModal, setTelInput, setVerificationCode } =
+export const { setResultModal, setTelInput, setVerificationCode, setDownloadModal } =
   resultSlice.actions;
 export const resultSel = (state) => state.result;
 

@@ -437,3 +437,16 @@
     font-weight: 300;
   }
 }
+
+.flex {
+  display: flex;
+  &-col {
+    flex-direction: column;
+  }
+}
+
+.gap {
+  &-8 {
+    gap: 8px;
+  }
+}

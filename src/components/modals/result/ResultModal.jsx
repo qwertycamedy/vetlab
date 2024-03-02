@@ -11,12 +11,18 @@ import {
   setTelInput,
   setVerificationCode,
 } from '@store/slices/result/resultSlice';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ResultModal = () => {
   const dispatch = useDispatch();
-  const { telInput, further, verificationCode } = useSelector(resultSel);
+  const {
+    telInput,
+    phoneModal,
+    codeModal,
+    downloadModal,
+    results,
+    verificationCode,
+  } = useSelector(resultSel);
   const { onCloseResult, resultModal } = useResultModal();
 
   const onFurther = () => {
@@ -36,51 +42,45 @@ const ResultModal = () => {
           verification_code: verificationCode,
         },
       }),
-    ).then((action) => {
-      const results = action.payload.results?.map((item) => item.file_path);
-
-      if(results) {
-        results.forEach((file_path) => {
-          axios
-            .get(`http://vetlab-back.tech-tester.ru${file_path}`, {
-              responseType: 'blob',
-            })
-            .then((response) => {
-              const url = window.URL.createObjectURL(new Blob([response.data]));
-              const link = document.createElement('a');
-              link.href = url;
-              link.setAttribute('target', '_blank');
-              link.setAttribute('download', 'filename.pdf');
-              document.body.appendChild(link);
-              link.click();
-              link.parentNode.removeChild(link);
-            })
-            .catch((error) => console.error('Error downloading PDF:', error));
-        });
-      } else {
-        alert("Результаты по данному номеру не найдены")
-      }
-        
-      onCloseResult();
-    });
+    );
   };
+
+  console.log(results);
 
   return (
     <MyModal modalIsOpen={resultModal} closeModal={onCloseResult}>
-      <MyForm classnames={'modal__form'} onSubmit={onResult}>
+      <MyForm classnames={'modal__form'}>
         <div className="modal__form-content">
-          {!further ? (
+          {phoneModal && (
             <TelInput telInput={telInput} setTelInput={setTelInput} />
-          ) : (
+          )}
+          {codeModal && (
             <MyInput
               title={'Код верификации'}
               value={verificationCode}
               setValue={setVerificationCode}
             />
           )}
+
+          {downloadModal && (
+            <div className="flex flex-col gap-8">
+              {results?.map((res, i) => (
+                <a
+                  className="modal__form-link link link-accent"
+                  href={res.file_path}
+                  target='_blank'
+                  key={res.id}
+                >
+                  <span>
+                    {res.animal_name}: {res.file_path}
+                  </span>
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
-        {!further ? (
+        {phoneModal && (
           <MyBtn
             classNames={'modal__btn btn-bg'}
             onClick={onFurther}
@@ -88,8 +88,13 @@ const ResultModal = () => {
           >
             Получить код
           </MyBtn>
-        ) : (
-          <MyBtn classNames={'modal__btn btn-bg'} type="submit">
+        )}
+        {codeModal && (
+          <MyBtn
+            classNames={'modal__btn btn-bg'}
+            type="button"
+            onClick={onResult}
+          >
             Получить результаты
           </MyBtn>
         )}
