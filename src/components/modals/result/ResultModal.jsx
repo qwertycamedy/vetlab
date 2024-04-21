@@ -66,13 +66,13 @@ const ResultModal = () => {
             <div className="flex flex-col gap-8">
               {results?.map((res, i) => (
                 <a
-                  className="modal__form-link link link-accent"
+                  className="modal__form-link btn btn-bg"
                   href={res.file_path}
                   target='_blank'
                   key={res.id}
                 >
                   <span>
-                    {res.animal_name}: {res.file_path}
+                    Скачать алализ: {res.animal_name} {i}
                   </span>
                 </a>
               ))}
